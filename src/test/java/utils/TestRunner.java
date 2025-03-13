@@ -7,7 +7,8 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/features",
-        glue = "src/test/java/stepdefs",
-        tags = "@smoke")
+        glue = "stepdefs",
+        tags = "@smoke",
+        plugin = {"pretty", "html:target/reports/html-reports/html-report.html"})
 public class TestRunner {
 }
