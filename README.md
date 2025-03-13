@@ -25,7 +25,6 @@ Project structure:
 Running tests
 - run this command by adding the selected browser type to the driver property: 
 > mvn test -Dbrowser=chrome
-- 
 
 Test reports
 
