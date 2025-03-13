@@ -8,19 +8,20 @@ The project is made for demo purposes.</p>
 Installation:
 - clone the repository from GitHub and open as a Java Maven project
 - run mvn clean install
-- mark src/test folder as sources 
+- mark src/main/java folder as source
+- mark src/test/java folder as test source
 - mark src/test/resources folder as test resources
+- use Cucumber and Gherkin plugins in your IDE
 
 Project structure:
 - gherkin test scenario: src/test/resources/features/
-- step definitions: src/test/stepdefs
-- test runner class: src/test/utils
-- page objects: src/test/pages
+- step definitions: src/test/java/stepdefs
+- page objects: src/main/java/pages
   - abbreviations for web elements:
        - IF: input field
        - CB: checkbox
        - RB: radio button
-
+- test runner classes: src/test/java/utils
 
 Running tests
 - run this command by adding the selected browser type to the driver property: 

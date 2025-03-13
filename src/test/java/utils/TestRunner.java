@@ -6,8 +6,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "resources/features",
-        glue = "stepdefs",
-        tags = "@smoke, ~@neg")
+        features = "src/test/resources/features",
+        glue = "src/test/java/stepdefs",
+        tags = "@smoke")
 public class TestRunner {
 }
