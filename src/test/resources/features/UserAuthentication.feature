@@ -35,8 +35,9 @@ Jellemző: Autentikáció
         Akkor "<hibaüzenet>" szöveg jelenik meg
         És A bejelentkezés oldalon maradok
         Példák:
-        | felhasználó   | jelszó    | hibaüzenet                                                |
-        | apa           | XY1234567 |  Kérjük, adj meg egy érvényes e-mail címet.               |
-        | apa@gmail.com | XY        |  A szövegnek legalább 8 karakter hosszúnak kell lennie.   |
-        | apa@gmail.com | XY1234567 |  Kérjük, ellenőrizd a megadott adatokat.                  |
+        | felhasználó     | jelszó    | hibaüzenet                                                |
+        | apa             | XY1234567 |  Kérjük, adj meg egy érvényes e-mail címet.               |
+        | apa@gmail.com   | XY        |  A szövegnek legalább 8 karakter hosszúnak kell lennie.   |
+        | apa@gmail.com   | XY1234567 |  Kérjük, ellenőrizd a megadott adatokat.                  |
+        | teszt@gmail.com | XY        |  Kérjük, ellenőrizd a megadott adatokat.                  |
 

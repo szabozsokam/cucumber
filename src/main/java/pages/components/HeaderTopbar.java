@@ -47,7 +47,7 @@ public class HeaderTopbar {
     }
 
     public void clickRegisterMenu(){
-        new Actions(driver).moveToElement(accountIcon).moveToElement(menuItemRegister).click().perform();
+        new Actions(driver).moveToElement(accountIcon).moveToElement(menuItemRegister).click().build().perform();
         ConfigFileReader configFileReader = new ConfigFileReader();
         String registerUrl = configFileReader.getConfigValue("registerUrl");
         if (!Objects.equals(driver.getCurrentUrl(), registerUrl)){
@@ -56,7 +56,7 @@ public class HeaderTopbar {
     }
 
     public void logout(){
-        new Actions(driver).moveToElement(accountIcon).moveToElement(logoutLink).click().perform();
+        new Actions(driver).moveToElement(accountIcon).moveToElement(logoutLink).click().build().perform();
         ConfigFileReader configFileReader = new ConfigFileReader();
         String logoutUrl = configFileReader.getConfigValue("logoutUrl");
         if (!Objects.equals(driver.getCurrentUrl(), logoutUrl)){

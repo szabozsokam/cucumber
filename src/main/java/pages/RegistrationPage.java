@@ -1,6 +1,8 @@
 package pages;
 
 import dataProvider.ConfigFileReader;
+import org.apache.commons.text.RandomStringGenerator;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,24 +12,21 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.components.HeaderTopbar;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 
 public class RegistrationPage {
 
-    private final String REGISTER_URL;
     private final String DASHBOARD_URL;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
-    private String password;
-    private String street;
-    private String number;
-    private String postalCode;
-    private String city;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
+    private final String phone;
+    private final String password;
+    private final String street;
+    private final String number;
+    private final String postalCode;
+    private final String city;
 
 
     @FindBy(xpath = "//input[@id='0']")
@@ -57,9 +56,6 @@ public class RegistrationPage {
     @FindBy(id = "delivery-line2")
     private WebElement houseNumberIF;
 
-    @FindBy(id = "delivery-appartment")
-    private WebElement supplementaryInfoIF;
-
     @FindBy(id = "delivery-postalCode")
     private WebElement postalCodeIF;
 
@@ -84,11 +80,10 @@ public class RegistrationPage {
         this.driver = driver;
         this.headerTopbar = new HeaderTopbar(this.driver);
         ConfigFileReader configFileReader = new ConfigFileReader();
-        this.REGISTER_URL = configFileReader.getConfigValue("registerUrl");
+        String REGISTER_URL = configFileReader.getConfigValue("registerUrl");
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlToBe(REGISTER_URL));
         PageFactory.initElements(this.driver, this);
-        String timestamp = this.generateTimestamp();
-        this.lastName = "Test" + timestamp;
+        this.lastName = generateRandomName();
         this.email = this.lastName + "@gmail.com";
         this.phone = this.generateRandomPhoneNumber();
         this.firstName = configFileReader.getConfigValue("regFirstName");
@@ -101,28 +96,27 @@ public class RegistrationPage {
     }
 
     public void registerAsPerson(){
-        if (!personIsChecked()){
-            personRB.click();
-        }
         firstNameIF.sendKeys(firstName);
         lastNameIF.sendKeys(lastName);
         emailIF.sendKeys(email);
         phoneIF.sendKeys(phone);
         passwordIF.sendKeys(password);
         streetIF.sendKeys(street);
+        streetIF.sendKeys(Keys.ENTER);
         houseNumberIF.sendKeys(number);
         postalCodeIF.sendKeys(postalCode);
         cityIF.sendKeys(city);
+        cityIF.sendKeys(Keys.ENTER);
         privacyPolicyCB.click();
         registerButton.click();
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlToBe(DASHBOARD_URL));
     }
 
     public void registerIncomplete() {
-        personRB.click();
         firstNameIF.sendKeys(firstName);
         lastNameIF.sendKeys(lastName);
         registerButton.click();
+        new WebDriverWait(driver, Duration.ofSeconds(1)).until(ExpectedConditions.visibilityOf(errorMessages.get(0)));
     }
 
     public boolean personIsChecked(){
@@ -131,10 +125,10 @@ public class RegistrationPage {
         return checkedState.getCssValue("background-color").equals("#00aa7a");
     }
 
-    private String generateTimestamp(){
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmm");
-        return now.format(formatter);
+    private String generateRandomName(){
+        RandomStringGenerator generator = new RandomStringGenerator.Builder()
+                .withinRange('a', 'z').build();
+        return generator.generate(7);
     }
 
     private String generateRandomPhoneNumber(){

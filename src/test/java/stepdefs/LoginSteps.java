@@ -31,8 +31,13 @@ public class LoginSteps {
 
     @Akkor("{string} szöveg jelenik meg")
     public void szövegJelenikMeg(String errorMessage) {
-        WebElement message = driver.findElement(By.xpath("//span [text()[contains(.," + errorMessage +"]"));
-        Assertions.assertTrue(message.isDisplayed());
+        WebElement message;
+        if (errorMessage.equals("Kérjük, ellenőrizd a megadott adatokat.")){
+            message = driver.findElement(By.cssSelector("div.global-alert-message.error"));
+        } else {
+            message = driver.findElement(By.cssSelector("span.form-control-errors"));
+        }
+        Assertions.assertEquals(errorMessage, message.getText().trim());
     }
 
     @És("A bejelentkezés oldalon maradok")
