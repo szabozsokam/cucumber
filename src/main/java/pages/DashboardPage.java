@@ -13,21 +13,20 @@ import java.time.Duration;
 
 public class DashboardPage {
 
-    @FindBy(xpath = "//h1[text()[contains(.,'Fiókom')]")
-    public WebElement accountHeader;
+    @FindBy(xpath = "//h1[text()[contains(.,'Fiókom')]]")
+    public WebElement newAccountHeader;
+
+    @FindBy(xpath = "//strong[text()[contains(.,'Fiókom')]]")
+    public WebElement accountMenuTitle;
 
     public HeaderTopbar headerTopbar;
 
-    private final String DASHBOARD_URL;
-
-    protected WebDriver driver;
-
 
     public DashboardPage(WebDriver driver) {
-        this.driver = driver;
+        this.headerTopbar = new HeaderTopbar(driver);
         ConfigFileReader configFileReader = new ConfigFileReader();
-        this.DASHBOARD_URL = configFileReader.getConfigValue("dashboardUrl");
-        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlToBe(DASHBOARD_URL));
-        PageFactory.initElements(this.driver, this);
+        String DASHBOARD_URL = configFileReader.getConfigValue("dashboardUrl");
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.urlToBe(DASHBOARD_URL));
+        PageFactory.initElements(driver, this);
     }
 }

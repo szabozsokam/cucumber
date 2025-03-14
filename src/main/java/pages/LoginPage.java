@@ -24,17 +24,14 @@ public class LoginPage {
 
     public HeaderTopbar headerTopbar;
 
-    private final String LOGIN_URL;
-    private final String DASHBOARD_URL;
-
-    protected WebDriver driver;
+    WebDriver driver;
 
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
+        this.headerTopbar = new HeaderTopbar(this.driver);
         ConfigFileReader configFileReader = new ConfigFileReader();
-        this.LOGIN_URL = configFileReader.getConfigValue("loginUrl");
-        this.DASHBOARD_URL = configFileReader.getConfigValue("dashboardUrl");
+        String LOGIN_URL = configFileReader.getConfigValue("loginUrl");
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlToBe(LOGIN_URL));
         PageFactory.initElements(this.driver, this);
     }
@@ -42,8 +39,9 @@ public class LoginPage {
     public void login(String username, String password){
         usernameIF.sendKeys(username);
         passwordIF.sendKeys(password);
-        loginButton.click();
-        new WebDriverWait(driver, Duration.ofSeconds(2))
-                .until(ExpectedConditions.urlToBe(DASHBOARD_URL));
+        // negatív scenariok egy részénél nem lesz kattintható
+        if (loginButton.isEnabled()) {
+            loginButton.click();
+        }
     }
 }

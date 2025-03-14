@@ -12,11 +12,11 @@ import pages.components.HeaderTopbar;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Random;
 
 public class RegistrationPage {
 
-    private final ConfigFileReader configFileReader;
     private final String REGISTER_URL;
     private final String DASHBOARD_URL;
     private String firstName;
@@ -30,8 +30,11 @@ public class RegistrationPage {
     private String city;
 
 
-    @FindBy(xpath = "//button[@data-key='register.component.gendertype.person']")
+    @FindBy(xpath = "//input[@id='0']")
     private WebElement personRB;
+
+    @FindBy(xpath = "//input[@id='0']/..//span[@class='checked']")
+    private WebElement checkedState;
 
     @FindBy(id = "delivery-firstName")
     private WebElement firstNameIF;
@@ -69,6 +72,9 @@ public class RegistrationPage {
     @FindBy(xpath = "//button[@data-key='register.component.register']")
     public WebElement registerButton;
 
+    @FindBy(className = "form-control-errors")
+    public List<WebElement> errorMessages;
+
     public HeaderTopbar headerTopbar;
 
     protected WebDriver driver;
@@ -76,7 +82,8 @@ public class RegistrationPage {
 
     public RegistrationPage(WebDriver driver) {
         this.driver = driver;
-        this.configFileReader = new ConfigFileReader();
+        this.headerTopbar = new HeaderTopbar(this.driver);
+        ConfigFileReader configFileReader = new ConfigFileReader();
         this.REGISTER_URL = configFileReader.getConfigValue("registerUrl");
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlToBe(REGISTER_URL));
         PageFactory.initElements(this.driver, this);
@@ -93,22 +100,10 @@ public class RegistrationPage {
         this.DASHBOARD_URL = configFileReader.getConfigValue("dashboardUrl");
     }
 
-    private String generateTimestamp(){
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmm");
-        return now.format(formatter);
-    }
-
-    private String generateRandomPhoneNumber(){
-        Random random = new Random();
-        int min = 1000000;
-        int max = 9999999;
-        String phoneNumber = String.valueOf(random.nextInt( max - min) + min);
-        return "+3620" + phoneNumber;
-    }
-
-    public void registrateAsPerson(){
-        personRB.click();
+    public void registerAsPerson(){
+        if (!personIsChecked()){
+            personRB.click();
+        }
         firstNameIF.sendKeys(firstName);
         lastNameIF.sendKeys(lastName);
         emailIF.sendKeys(email);
@@ -123,4 +118,30 @@ public class RegistrationPage {
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlToBe(DASHBOARD_URL));
     }
 
+    public void registerIncomplete() {
+        personRB.click();
+        firstNameIF.sendKeys(firstName);
+        lastNameIF.sendKeys(lastName);
+        registerButton.click();
+    }
+
+    public boolean personIsChecked(){
+        String RBcolor = checkedState.getCssValue("background-color");
+        System.out.println("Person radio button has " + RBcolor + " color.");
+        return checkedState.getCssValue("background-color").equals("#00aa7a");
+    }
+
+    private String generateTimestamp(){
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmm");
+        return now.format(formatter);
+    }
+
+    private String generateRandomPhoneNumber(){
+        Random random = new Random();
+        int min = 1000000;
+        int max = 9999999;
+        String phoneNumber = String.valueOf(random.nextInt( max - min) + min);
+        return "+3620" + phoneNumber;
+    }
 }

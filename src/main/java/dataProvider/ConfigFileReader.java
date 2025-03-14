@@ -8,12 +8,12 @@ import java.util.Properties;
 
 public class ConfigFileReader {
 
-    private Properties properties;
-    private final String propertyFilePath= "//config.properties";
+    private final Properties properties;
 
 
     public ConfigFileReader(){
         BufferedReader reader;
+        String propertyFilePath = "config.properties";
         try {
             reader = new BufferedReader(new FileReader(propertyFilePath));
             properties = new Properties();
