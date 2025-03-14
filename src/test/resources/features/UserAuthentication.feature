@@ -31,8 +31,8 @@ Jellemző: Autentikáció
       @neg
       Forgatókönyv vázlat: Sikertelen belépés
         Amennyiben A Bejelentkezés oldalra navigálok
-        Amikor Bejelentkezek <felhasználó> és <jelszó> adatokkal
-        Akkor <hibaüzenet> szöveg jelenik meg
+        Amikor Bejelentkezek "<felhasználó>" és "<jelszó>" adatokkal
+        Akkor "<hibaüzenet>" szöveg jelenik meg
         És A bejelentkezés oldalon maradok
         Példák:
         | felhasználó   | jelszó    | hibaüzenet                                                |

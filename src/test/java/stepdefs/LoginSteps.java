@@ -23,15 +23,15 @@ public class LoginSteps {
         loginPage.login(savedUser, pw);
     }
 
-    @Amikor("Bejelentkezek <felhasználó> és <jelszó> adatokkal")
-    public void bejelentkezekFelhasználóÉsJelszóAdatokkal(String user, String password) {
+    @Amikor("Bejelentkezek {string} és {string} adatokkal")
+    public void bejelentkezekÉsAdatokkal(String username, String password) {
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login(user, password);
+        loginPage.login(username, password);
     }
 
-    @Akkor("<hibaüzenet> szöveg jelenik meg")
-    public void hibaüzenetSzövegJelenikMeg(String errorMessage) {
-        WebElement message = driver.findElement(By.xpath("//span [text()[contains(.,$errorMessage]"));
+    @Akkor("{string} szöveg jelenik meg")
+    public void szövegJelenikMeg(String errorMessage) {
+        WebElement message = driver.findElement(By.xpath("//span [text()[contains(.," + errorMessage +"]"));
         Assertions.assertTrue(message.isDisplayed());
     }
 
