@@ -62,7 +62,7 @@ public class RegistrationPage {
     @FindBy(id = "delivery-town")
     private WebElement cityIF;
 
-    @FindBy(xpath = "//span[@data-key='core.component.formOrderConfirmationRegister.privacyPolicyConfirmed']")
+    @FindBy(css = "div.privacy-label")
     public WebElement privacyPolicyCB;
 
     @FindBy(xpath = "//button[@data-key='register.component.register']")
@@ -106,8 +106,9 @@ public class RegistrationPage {
         houseNumberIF.sendKeys(number);
         postalCodeIF.sendKeys(postalCode);
         cityIF.sendKeys(city);
-        cityIF.sendKeys(Keys.ENTER);
+        cityIF.sendKeys(Keys.TAB);
         privacyPolicyCB.click();
+        new WebDriverWait(driver, Duration.ofSeconds(1)).until(ExpectedConditions.elementToBeClickable(registerButton));
         registerButton.click();
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlToBe(DASHBOARD_URL));
     }
@@ -115,11 +116,31 @@ public class RegistrationPage {
     public void registerIncomplete() {
         firstNameIF.sendKeys(firstName);
         lastNameIF.sendKeys(lastName);
+        new WebDriverWait(driver, Duration.ofSeconds(1)).until(ExpectedConditions.elementToBeClickable(registerButton));
         registerButton.click();
         new WebDriverWait(driver, Duration.ofSeconds(1)).until(ExpectedConditions.visibilityOf(errorMessages.get(0)));
     }
 
-    public boolean personIsChecked(){
+    public void registerWithSavedUser(){
+        firstNameIF.sendKeys(firstName);
+        lastNameIF.sendKeys(lastName);
+        ConfigFileReader configFileReader = new ConfigFileReader();
+        String savedUser = configFileReader.getConfigValue("savedUser");
+        emailIF.sendKeys(savedUser);
+        phoneIF.sendKeys(phone);
+        passwordIF.sendKeys(password);
+        streetIF.sendKeys(street);
+        streetIF.sendKeys(Keys.ENTER);
+        houseNumberIF.sendKeys(number);
+        postalCodeIF.sendKeys(postalCode);
+        cityIF.sendKeys(city);
+        cityIF.sendKeys(Keys.TAB);
+        privacyPolicyCB.click();
+        new WebDriverWait(driver, Duration.ofSeconds(1)).until(ExpectedConditions.elementToBeClickable(registerButton));
+        registerButton.click();
+    }
+
+    private boolean personIsChecked(){
         String RBcolor = checkedState.getCssValue("background-color");
         System.out.println("Person radio button has " + RBcolor + " color.");
         return checkedState.getCssValue("background-color").equals("#00aa7a");

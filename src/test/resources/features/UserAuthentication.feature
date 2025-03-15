@@ -14,10 +14,17 @@ Jellemző: Autentikáció
         Akkor A fiókom létrejön
 
       @neg @smoke
-      Példa: Sikertelen regisztráció
+      Példa: Sikertelen regisztráció hiányos adatok miatt
         Amennyiben A Regisztráció oldalra navigálok
         Amikor Hiányosan kitöltöm és beküldöm a regisztrációt
         Akkor Hibaüzenet jelzi a kitöltendő mezőt
+        És A Regisztráció oldalon maradok
+
+      @neg
+      Példa: Sikertelen regisztráció már regisztrált email címmel
+        Amennyiben A Regisztráció oldalra navigálok
+        Amikor Korábban regisztrált email címmel próbálok regisztrálni
+        Akkor Hibaüzenet jelzi hogy már létezik fiók az email címmel
         És A Regisztráció oldalon maradok
 
   Szabály: Regisztrált email címmel és megfelelő jelszóval lehet belépni
