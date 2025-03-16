@@ -14,6 +14,7 @@ The project is made for demo purposes.</p>
   - test source: src/test/java
   - test resources: src/test/features
 - use Cucumber and Gherkin plugins in your IDE
+- choose windows-1250 for file encoding in order to handle hungarian characters
 
 
 ## Project structure:

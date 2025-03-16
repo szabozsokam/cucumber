@@ -28,13 +28,6 @@ public class RegistrationPage {
     private final String postalCode;
     private final String city;
 
-
-    @FindBy(xpath = "//input[@id='0']")
-    private WebElement personRB;
-
-    @FindBy(xpath = "//input[@id='0']/..//span[@class='checked']")
-    private WebElement checkedState;
-
     @FindBy(id = "delivery-firstName")
     private WebElement firstNameIF;
 
@@ -138,12 +131,6 @@ public class RegistrationPage {
         privacyPolicyCB.click();
         new WebDriverWait(driver, Duration.ofSeconds(1)).until(ExpectedConditions.elementToBeClickable(registerButton));
         registerButton.click();
-    }
-
-    private boolean personIsChecked(){
-        String RBcolor = checkedState.getCssValue("background-color");
-        System.out.println("Person radio button has " + RBcolor + " color.");
-        return checkedState.getCssValue("background-color").equals("#00aa7a");
     }
 
     private String generateRandomName(){
