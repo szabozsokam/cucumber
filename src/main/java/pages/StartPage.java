@@ -8,7 +8,7 @@ import pages.components.HeaderTopbar;
 
 public class StartPage {
 
-    @FindBy(xpath = "//img[@alt='Deichmann']")
+    @FindBy(xpath = "//img[@alt='logo-deichmann-px']")
     public WebElement logo;
 
     @FindBy(id = "cmpbox")

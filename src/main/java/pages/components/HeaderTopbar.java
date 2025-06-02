@@ -14,17 +14,17 @@ import java.util.Objects;
 
 public class HeaderTopbar {
 
-    @FindBy(xpath = "//div[@class='headerTopbar']")
+    @FindBy(tagName = "deich-lib-shortcuts")
     public WebElement headerTopbar;
 
-    @FindBy(xpath = "//map[@name='account']")
-    public WebElement accountIcon;
+    @FindBy(xpath = "//button[@aria-label='login']")
+    public WebElement accountButton;
 
-    @FindBy(xpath = "//button[@data-key='core.component.header.loginButtonLabel']")
-    public WebElement menuItemLogin;
+    @FindBy(xpath = "//button[@aria-label='Login']")
+    public WebElement loginButton;
 
-    @FindBy(xpath = "//u[@data-key='core.component.header.registerLabel']")
-    public WebElement menuItemRegister;
+    @FindBy(xpath = "//button[@aria-label='register']")
+    public WebElement registerButton;
 
     @FindBy(xpath = "//a[@data-key='core.component.header.userInfo.logoutHint']")
     public WebElement logoutLink;
@@ -38,7 +38,7 @@ public class HeaderTopbar {
     }
 
     public void clickLoginMenu(){
-        new Actions(driver).moveToElement(accountIcon).moveToElement(menuItemLogin).click().perform();
+        new Actions(driver).moveToElement(accountButton).moveToElement(loginButton).click().perform();
         ConfigFileReader configFileReader = new ConfigFileReader();
         String loginUrl = configFileReader.getConfigValue("loginUrl");
         if (!Objects.equals(driver.getCurrentUrl(), loginUrl)){
@@ -47,7 +47,7 @@ public class HeaderTopbar {
     }
 
     public void clickRegisterMenu(){
-        new Actions(driver).moveToElement(accountIcon).moveToElement(menuItemRegister).click().build().perform();
+        new Actions(driver).moveToElement(accountButton).moveToElement(registerButton).click().build().perform();
         ConfigFileReader configFileReader = new ConfigFileReader();
         String registerUrl = configFileReader.getConfigValue("registerUrl");
         if (!Objects.equals(driver.getCurrentUrl(), registerUrl)){
@@ -56,7 +56,7 @@ public class HeaderTopbar {
     }
 
     public void logout(){
-        new Actions(driver).moveToElement(accountIcon).moveToElement(logoutLink).click().build().perform();
+        new Actions(driver).moveToElement(accountButton).moveToElement(logoutLink).click().build().perform();
         ConfigFileReader configFileReader = new ConfigFileReader();
         String logoutUrl = configFileReader.getConfigValue("logoutUrl");
         if (!Objects.equals(driver.getCurrentUrl(), logoutUrl)){
